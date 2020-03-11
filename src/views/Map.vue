@@ -1,6 +1,7 @@
 
 <template>
   <div class="mapContainer">
+    <div id="googlemap"></div>
     <van-button
       round
       class="backButton"
@@ -37,12 +38,12 @@ export default {
       this.$router.go(-1);
     }
   },
-  name: 'App',
+  name: 'googleMap',
   async mounted() {
     try {
       const google = await gmapsInit();
       const geocoder = new google.maps.Geocoder();
-      const map = new google.maps.Map(this.$el, {
+      const map = new google.maps.Map(document.querySelector("#googlemap"), {
           zoom: 4,
           center: {lat: 43.471379, lng: -80.542099},
           disableDefaultUI: true
@@ -64,10 +65,9 @@ export default {
         map.setCenter(results[0].geometry.location);
         map.fitBounds(results[0].geometry.viewport);
       });
-       const markers = locations.map(x => new google.maps.Marker({ ...x, map }));
-       console.log(markers);
+      locations.map(x => new google.maps.Marker({ ...x, map }));
     } catch (error) {
-      console.error(error);
+      // console.error(error);
     }
   }
 };
@@ -76,12 +76,11 @@ export default {
 <style scoped lang="scss">
 .luggageContainer {
   position: absolute;
-  left: 20px;
-  right: 20px;
-  bottom: 20px;
+  left: 0px;
+  right: 0px;
+  bottom: 0px;
   overflow: hidden;
-  border-radius: 10px;
-  z-index: 9999;
+  z-index: 999;
 }
 .mapContainer {
   .backButton {
@@ -89,15 +88,13 @@ export default {
     left: 20px;
     top: 20px;
   }
+  #googlemap{
+    height: 100%;
+    width: 100%;
+  }
   position: relative;
   height: 100vh;
   width: 100vw;
-  overflow: hidden;
-}
-.App {
-  position: fixed;
-  width: 50vw;
-  height: 50vh;
   overflow: hidden;
 }
 </style>
