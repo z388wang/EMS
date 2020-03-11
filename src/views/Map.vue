@@ -1,32 +1,35 @@
 <template>
   <div class="mapContainer">
-    <van-icon
+    <van-button
+      round
       class="backButton"
-      name="arrow-left"
-      size="25"
-      @click.native="goBack"
-    />
-    <!-- <img src="../../public/img/googlemap.jpg" /> -->
-    <GmapMap :center="{ lat: 10, lng: 10 }">
-      <GmapMarker
-        v-for="(m, index) in markers"
-        :key="index"
-        :position="m.position"
-        @click="center = m.position"
-      />
-    </GmapMap>
+      icon="arrow-left"
+      type="info"
+      @click="goBack"
+    >
+      Back
+    </van-button>
     <div class="luggageContainer">
-      <van-card
-        title="luggage.name"
-        class="goods-card"
-        thumb="https://img.yzcdn.cn/vant/cat.jpeg"
+      <card
+        :name="luggage.name"
+        :id="luggage.ID"
+        image="https://img.yzcdn.cn/vant/cat.jpeg"
       />
     </div>
   </div>
 </template>
 
 <script>
+import Card from "@/components/Card";
+import { mapGetters } from "vuex";
+
 export default {
+  components: {
+    Card
+  },
+  computed: {
+    ...mapGetters({ luggage: "selectedLuggage" })
+  },
   methods: {
     goBack() {
       this.$router.go(-1);
@@ -35,12 +38,7 @@ export default {
 };
 </script>
 
-<style scoped>
-.backButton {
-  position: absolute;
-  left: 20px;
-  top: 20px;
-}
+<style scoped lang="scss">
 .luggageContainer {
   position: absolute;
   left: 20px;
@@ -50,6 +48,11 @@ export default {
   border-radius: 10px;
 }
 .mapContainer {
+  .backButton {
+    position: absolute;
+    left: 20px;
+    top: 20px;
+  }
   position: relative;
   height: 100vh;
   width: 100vw;
