@@ -3,50 +3,70 @@
     <van-nav-bar title="My Luggages" @click-right="newLuggage">
       <van-icon name="add-o" slot="right" size="25" />
     </van-nav-bar>
-    <template v-if="allLuggages.length === 0">
-      <p>You dont have any luggages</p>
-    </template>
-    <template v-else>
-      <van-swipe-cell v-for="(luggage, index) in allLuggages" :key="index">
-        <van-card
-          :title="luggage.name"
-          class="goods-card"
-          thumb="https://img.yzcdn.cn/vant/cat.jpeg"
-          @click.native="showMap"
-        />
-        <van-button
-          slot="right"
-          text="DELETE"
-          type="danger"
-          class="delete-button"
-          @click="removeLuggage(index)"
-        />
-      </van-swipe-cell>
-    </template>
+    <van-pull-refresh class="list" v-model="isLoading" @refresh="onRefresh">
+      <template v-if="allLuggages.length === 0">
+        <div class="no-data">
+          You don't have any luggage registered<br />Add a luggage through the
+          top right button
+        </div>
+      </template>
+      <template v-else>
+        <van-swipe-cell
+          class="swipe"
+          v-for="(luggage, index) in allLuggages"
+          :key="index"
+        >
+          <card
+            @click.native="showMap(index)"
+            image="https://img.yzcdn.cn/vant/cat.jpeg"
+            :name="luggage.name"
+            :id="luggage.ID"
+          />
+          <van-button
+            slot="right"
+            text="DELETE"
+            type="danger"
+            class="delete-button"
+            @click="removeLuggage(index)"
+          />
+        </van-swipe-cell>
+      </template>
+    </van-pull-refresh>
     <van-dialog
       v-model="showAddNewLuggage"
       title="Add a new luggage"
       show-cancel-button
       @confirm="addNewLuggage"
     >
-      <van-field
-        v-model="newLuggageID"
-        placeholder="Enter your luggage ID"
-        type="digit"
-      />
-      <van-field
-        v-model="newLuggageName"
-        placeholder="Enter your luggage name"
-      />
+      <div class="new-luggage">
+        <van-field
+          class="new-luggage__ID"
+          v-model="newLuggageID"
+          placeholder="Enter a new luggage ID"
+          type="digit"
+        />
+        <van-field
+          class="new-luggage__name"
+          v-model="newLuggageName"
+          placeholder="Enter a new luggage name"
+        />
+      </div>
     </van-dialog>
   </div>
 </template>
 
 <script>
+import Card from "@/components/Card";
+import { mapMutations } from "vuex";
+
 export default {
   name: "Home",
+  components: {
+    Card
+  },
   data() {
     return {
+      isLoading: false,
       allLuggages: [],
       showAddNewLuggage: false,
       newLuggageID: "",
@@ -88,11 +108,44 @@ export default {
       this.allLuggages.splice(index, 1);
       this._saveToLocal();
     },
-    showMap() {
+    showMap(index) {
+      this.setLuggage(this.allLuggages[index]);
       this.$router.push("map");
-    }
+    },
+    onRefresh() {
+      setTimeout(() => {
+        this.$toast("Refresh success");
+        this.isLoading = false;
+      }, Math.random() * 2000);
+    },
+    ...mapMutations(["setLuggage"])
   }
 };
 </script>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+.list {
+  background: #f7f8fa;
+  height: 100%;
+}
+.no-data {
+  margin: 20px;
+}
+.swipe + .swipe {
+  margin-top: 2px;
+}
+.delete-button {
+  height: 100%;
+  border-radius: 0px;
+}
+.new-luggage {
+  margin: 20px 0;
+  &__ID,
+  &__name {
+    border: 1px solid grey;
+    border-radius: 12px;
+    margin: 10px 20px;
+    width: calc(100% - 40px);
+  }
+}
+</style>
