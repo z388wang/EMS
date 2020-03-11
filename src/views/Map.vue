@@ -83,7 +83,6 @@ export default {
         //   console.log(results);
         // });
       } catch (error) {
-        console.error(error);
         this.$notify({
           type: "danger",
           message: `Failed to load Google Map\n${error.toString()}`
