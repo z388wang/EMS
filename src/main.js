@@ -3,6 +3,13 @@ import App from "./App.vue";
 import "./registerServiceWorker";
 import router from "./router";
 import store from "./store";
+import Vant from "vant";
+import "vant/lib/index.css";
+import { Locale } from "vant";
+import enUS from "vant/lib/locale/lang/en-US";
+
+Locale.use("en-US", enUS);
+Vue.use(Vant);
 
 Vue.config.productionTip = false;
 
