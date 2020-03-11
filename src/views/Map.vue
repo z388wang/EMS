@@ -43,7 +43,7 @@ export default {
       try {
         const google = window.google;
         const currentLocation = await this.getGeolocation();
-        // const geocoder = new google.maps.Geocoder();
+        const geocoder = new google.maps.Geocoder();
         const map = new google.maps.Map(document.querySelector("#googlemap"), {
           zoom: 14,
           disableDefaultUI: true,
@@ -53,19 +53,19 @@ export default {
           position: currentLocation,
           map
         });
+        const infoWindow = new google.maps.InfoWindow();
+        infoWindow.setPosition(currentLocation);
 
-        // geocoder.geocode({ location: currentLocation }, (results, status) => {
-        //   if (status !== "OK" || !results[0]) {
-        //     this.$notify({
-        //       type: "warning",
-        //       message: "Failed to decode location"
-        //     });
-        //   }
-
-        //   // map.setCenter(results[0].geometry.location);
-        //   // map.fitBounds(results[0].geometry.viewport);
-        //   console.log(results);
-        // });
+        geocoder.geocode({ location: currentLocation }, (results, status) => {
+          if (status !== "OK" || !results[0]) {
+            this.$notify({
+              type: "warning",
+              message: "Failed to decode location"
+            });
+          }
+          infoWindow.setContent("Near: " + results[0].formatted_address);
+          infoWindow.open(map);
+        });
       } catch (error) {
         this.$notify({
           type: "danger",
