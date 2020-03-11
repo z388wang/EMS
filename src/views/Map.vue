@@ -1,35 +1,56 @@
+
 <template>
   <div class="mapContainer">
-    <van-icon
-      class="backButton"
-      name="arrow-left"
-      size="25"
-      @click.native="goBack"
-    />
+    <van-icon class="backButton" name="arrow-left" size="25" @click.native="goBack" />
     <!-- <img src="../../public/img/googlemap.jpg" /> -->
-    <GmapMap :center="{ lat: 10, lng: 10 }">
-      <GmapMarker
-        v-for="(m, index) in markers"
-        :key="index"
-        :position="m.position"
-        @click="center = m.position"
-      />
-    </GmapMap>
+
+    <div class="App" />
     <div class="luggageContainer">
-      <van-card
-        title="luggage.name"
-        class="goods-card"
-        thumb="https://img.yzcdn.cn/vant/cat.jpeg"
-      />
+      <van-card title="luggage.name" class="goods-card" thumb="https://img.yzcdn.cn/vant/cat.jpeg" />
     </div>
   </div>
 </template>
 
 <script>
+import gmapsInit from '../views/gmaps';
+
 export default {
   methods: {
     goBack() {
       this.$router.go(-1);
+    }
+  },
+  name: 'App',
+  async mounted() {
+    try {
+      const google = await gmapsInit();
+      const geocoder = new google.maps.Geocoder();
+      const map = new google.maps.Map(this.$el, {
+          zoom: 4,
+          center: {lat: 43.471379, lng: -80.542099},
+          disableDefaultUI: true
+      });
+      const locations = [
+        {
+          position: {
+            lat: 43.471379,
+            lng: -80.542099,
+          },
+        },
+      ];
+
+      geocoder.geocode({ address: 'Centre for Environmental and Information Technology, waterloo' }, (results, status) => {
+        if (status !== 'OK' || !results[0]) {
+          throw new Error(status);
+        }
+
+        map.setCenter(results[0].geometry.location);
+        map.fitBounds(results[0].geometry.viewport);
+      });
+       const markers = locations.map(x => new google.maps.Marker({ ...x, map }));
+       console.log(markers);
+    } catch (error) {
+      console.error(error);
     }
   }
 };
@@ -40,6 +61,7 @@ export default {
   position: absolute;
   left: 20px;
   top: 20px;
+  z-index: 9999;
 }
 .luggageContainer {
   position: absolute;
@@ -48,11 +70,18 @@ export default {
   bottom: 20px;
   overflow: hidden;
   border-radius: 10px;
+  z-index: 9999;
 }
 .mapContainer {
   position: relative;
   height: 100vh;
   width: 100vw;
+  overflow: hidden;
+}
+.App {
+  position: fixed;
+  width: 50vw;
+  height: 50vh;
   overflow: hidden;
 }
 </style>
