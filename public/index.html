@@ -12,13 +12,25 @@
   </head>
   <body>
     <noscript>
-      <strong
-        >We're sorry but <%= htmlWebpackPlugin.options.title %> doesn't work
+      <strong>
+        We're sorry but <%= htmlWebpackPlugin.options.title %> doesn't work
         properly without JavaScript enabled. Please enable it to
-        continue.</strong
-      >
+        continue.
+      </strong>
     </noscript>
     <div id="app"></div>
     <!-- built files will be auto injected -->
+    <script>
+      let promiseResolver
+      window.googleMapReady = new Promise((resolve, reject) => {
+        promiseResolver = resolve
+      })
+      window.initMap = () => {
+        console.log("google map ready")
+        promiseResolver()
+      }
+    </script>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBfU46amwuQXkSnCkSwbjMuPSofV7w0PU0&callback=initMap">
+    </script>
   </body>
 </html>

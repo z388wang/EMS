@@ -1,19 +1,27 @@
 <template>
   <div class="list">
-    <van-nav-bar title="My Luggages" @click-right="newLuggage" @click-left="logOut">
-      <van-icon name="arrow-left" slot="left" size="25" />
+    <van-nav-bar
+      left-text="log out"
+      left-arrow
+      title="My Luggages"
+      @click-right="newLuggage"
+      @click-left="logOut"
+    >
       <van-icon name="add-o" slot="right" size="25" />
     </van-nav-bar>
     <van-pull-refresh class="list" v-model="isLoading" @refresh="onRefresh">
       <template v-if="allLuggages.length === 0">
         <div class="no-data">
           You don't have any luggage registered
-          <br />Add a luggage through the
-          top right button
+          <br />Add a luggage through the top right button
         </div>
       </template>
       <template v-else>
-        <van-swipe-cell class="swipe" v-for="(luggage, index) in allLuggages" :key="index">
+        <van-swipe-cell
+          class="swipe"
+          v-for="(luggage, index) in allLuggages"
+          :key="index"
+        >
           <card
             @click.native="showMap(index)"
             image="https://img.yzcdn.cn/vant/cat.jpeg"
@@ -88,7 +96,8 @@ export default {
       this.showAddNewLuggage = true;
     },
     logOut() {
-      this.$router.go(-1);
+      this.logout();
+      this.$router.push("login");
     },
     addNewLuggage() {
       if (this.allLuggages.some(luggage => luggage.ID === this.newLuggageID)) {
@@ -119,7 +128,7 @@ export default {
         this.isLoading = false;
       }, Math.random() * 2000);
     },
-    ...mapMutations(["setLuggage"])
+    ...mapMutations(["setLuggage", "logout"])
   }
 };
 </script>
