@@ -1,10 +1,12 @@
 <template>
   <div class="mapContainer">
-    <div id="googlemap">
-      <van-loading class="loading" type="spinner" size="24px">
-        Loading Map
-      </van-loading>
-    </div>
+    <keep-alive>
+      <div id="googlemap">
+        <van-loading class="loading" type="spinner" size="24px">
+          Loading Map
+        </van-loading>
+      </div>
+    </keep-alive>
     <van-button
       round
       class="backButton"
