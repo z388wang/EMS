@@ -1,11 +1,27 @@
 <template>
   <div class="mapContainer">
-    <div id="googlemap">
-      <van-loading class="loading" type="spinner" size="24px">Loading Map</van-loading>
-    </div>
-    <van-button round class="backButton" icon="arrow-left" type="info" @click="goBack">Back</van-button>
+    <keep-alive>
+      <div id="googlemap">
+        <van-loading class="loading" type="spinner" size="24px">
+          Loading Map
+        </van-loading>
+      </div>
+    </keep-alive>
+    <van-button
+      round
+      class="backButton"
+      icon="arrow-left"
+      type="info"
+      @click="goBack"
+    >
+      Back
+    </van-button>
     <div class="luggageContainer">
-      <card :name="luggage.name" :id="luggage.ID" image="https://img.yzcdn.cn/vant/cat.jpeg" />
+      <card
+        :name="luggage.name"
+        :id="luggage.ID"
+        image="https://img.yzcdn.cn/vant/cat.jpeg"
+      />
     </div>
   </div>
 </template>

@@ -9,7 +9,11 @@
     >
       <van-icon name="add-o" slot="right" size="25" />
     </van-nav-bar>
-    <van-pull-refresh class="list" v-model="isLoading" @refresh="onRefresh">
+    <van-pull-refresh
+      class="list-content"
+      v-model="isLoading"
+      @refresh="onRefresh"
+    >
       <template v-if="allLuggages.length === 0">
         <div class="no-data">
           You don't have any luggage registered
