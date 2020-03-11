@@ -1,21 +1,19 @@
 <template>
   <div class="list">
-    <van-nav-bar title="My Luggages" @click-right="newLuggage">
+    <van-nav-bar title="My Luggages" @click-right="newLuggage" @click-left="logOut">
+      <van-icon name="arrow-left" slot="left" size="25" />
       <van-icon name="add-o" slot="right" size="25" />
     </van-nav-bar>
     <van-pull-refresh class="list" v-model="isLoading" @refresh="onRefresh">
       <template v-if="allLuggages.length === 0">
         <div class="no-data">
-          You don't have any luggage registered<br />Add a luggage through the
+          You don't have any luggage registered
+          <br />Add a luggage through the
           top right button
         </div>
       </template>
       <template v-else>
-        <van-swipe-cell
-          class="swipe"
-          v-for="(luggage, index) in allLuggages"
-          :key="index"
-        >
+        <van-swipe-cell class="swipe" v-for="(luggage, index) in allLuggages" :key="index">
           <card
             @click.native="showMap(index)"
             image="https://img.yzcdn.cn/vant/cat.jpeg"
@@ -89,18 +87,21 @@ export default {
     newLuggage() {
       this.showAddNewLuggage = true;
     },
+    logOut() {
+      this.$router.go(-1);
+    },
     addNewLuggage() {
       if (this.allLuggages.some(luggage => luggage.ID === this.newLuggageID)) {
         this.$notify({
           type: "danger",
           message: "ID already exists!"
         });
-        return;
+      } else {
+        this.allLuggages.push({
+          name: this.newLuggageName,
+          ID: this.newLuggageID
+        });
       }
-      this.allLuggages.push({
-        name: this.newLuggageName,
-        ID: this.newLuggageID
-      });
       this.newLuggageID = "";
       this.newLuggageName = "";
     },
