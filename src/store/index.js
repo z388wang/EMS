@@ -9,7 +9,8 @@ export default new Vuex.Store({
     loggedIn: false,
     selectedLuggage: {
       name: "",
-      ID: ""
+      ID: "",
+      color: ""
     }
   },
   getters: {
