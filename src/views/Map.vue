@@ -2,26 +2,12 @@
   <div class="mapContainer">
     <keep-alive>
       <div id="googlemap">
-        <van-loading class="loading" type="spinner" size="24px">
-          Loading Map
-        </van-loading>
+        <van-loading class="loading" type="spinner" size="24px">Loading Map</van-loading>
       </div>
     </keep-alive>
-    <van-button
-      round
-      class="backButton"
-      icon="arrow-left"
-      type="info"
-      @click="goBack"
-    >
-      Back
-    </van-button>
+    <van-button round class="backButton" icon="arrow-left" type="info" @click="goBack">Back</van-button>
     <div class="luggageContainer">
-      <card
-        :name="luggage.name"
-        :id="luggage.ID"
-        image="https://img.yzcdn.cn/vant/cat.jpeg"
-      />
+      <card :name="luggage.name" :id="luggage.ID" image="https://img.yzcdn.cn/vant/cat.jpeg" />
     </div>
   </div>
 </template>
@@ -104,6 +90,8 @@ export default {
   bottom: 0px;
   overflow: hidden;
   z-index: 999;
+  padding-bottom: 20px;
+  background: white;
 }
 .mapContainer {
   background: #f7f8fa;
