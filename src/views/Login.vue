@@ -1,7 +1,9 @@
 <template>
   <div id="login">
     <div class="login">
+      <van-image width="200" height="200" src="./img/1.png" />
       <h4>Locate your EMS</h4>
+
       <van-form class="login__form" @submit="onSubmit">
         <van-field
           left-icon="user-o"
@@ -20,12 +22,8 @@
           placeholder="Enter your password"
           :rules="[{ required: true, message: 'Please enter your password' }]"
         />
-        <van-checkbox v-model="remember" style="margin: 16px 0;">
-          Remember me
-        </van-checkbox>
-        <van-button round block type="info" native-type="submit">
-          Login
-        </van-button>
+        <van-checkbox v-model="remember" style="margin: 16px 0;">Remember me</van-checkbox>
+        <van-button round block type="info" native-type="submit">Login</van-button>
       </van-form>
     </div>
   </div>
