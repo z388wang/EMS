@@ -28,7 +28,7 @@
         >
           <card
             @click.native="showMap(index)"
-            image="https://img.yzcdn.cn/vant/cat.jpeg"
+            :color="luggage.color"
             :name="luggage.name"
             :id="luggage.ID"
           />
@@ -76,6 +76,7 @@ export default {
   },
   data() {
     return {
+      allColors: ["#f44336", "#673AB7", "#03A9F4"],
       isLoading: false,
       allLuggages: [],
       showAddNewLuggage: false,
@@ -111,6 +112,7 @@ export default {
         });
       } else {
         this.allLuggages.push({
+          color: this.allColors[(this.allLuggages.length + 1) % 3],
           name: this.newLuggageName,
           ID: this.newLuggageID
         });
