@@ -9,11 +9,7 @@
     >
       <van-icon name="add-o" slot="right" size="25" />
     </van-nav-bar>
-    <van-pull-refresh
-      class="list-content"
-      v-model="isLoading"
-      @refresh="onRefresh"
-    >
+    <van-pull-refresh class="list-content" v-model="isLoading" @refresh="onRefresh">
       <template v-if="allLuggages.length === 0">
         <div class="no-data">
           You don't have any luggage registered
@@ -21,11 +17,7 @@
         </div>
       </template>
       <template v-else>
-        <van-swipe-cell
-          class="swipe"
-          v-for="(luggage, index) in allLuggages"
-          :key="index"
-        >
+        <van-swipe-cell class="swipe" v-for="(luggage, index) in allLuggages" :key="index">
           <card
             @click.native="showMap(index)"
             image="https://img.yzcdn.cn/vant/cat.jpeg"
@@ -108,6 +100,11 @@ export default {
         this.$notify({
           type: "danger",
           message: "ID already exists!"
+        });
+      } else if (this.newLuggageID !== "813735247414") {
+        this.$notify({
+          type: "danger",
+          message: "No ID matches!"
         });
       } else {
         this.allLuggages.push({
