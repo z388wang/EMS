@@ -6,16 +6,14 @@ module.exports = {
       orientation: "portrait",
       icons: [
         {
-          src: "manifest-icon-192.png",
+          src: "./img/icons/manifest-icon-192.png",
           sizes: "192x192",
-          type: "image/png",
-          purpose: "maskable any"
+          type: "image/png"
         },
         {
-          src: "manifest-icon-512.png",
+          src: "./img/icons/manifest-icon-512.png",
           sizes: "512x512",
-          type: "image/png",
-          purpose: "maskable any"
+          type: "image/png"
         }
       ]
     },
