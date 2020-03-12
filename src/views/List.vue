@@ -102,7 +102,10 @@ export default {
           type: "danger",
           message: "ID already exists!"
         });
-      } else if (this.newLuggageID !== "813735247414") {
+      } else if (
+        this.newLuggageID !== "813735247414" &&
+        this.newLuggageID !== "813735247415"
+      ) {
         this.$notify({
           type: "danger",
           message: "No ID matches!"

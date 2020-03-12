@@ -2,19 +2,10 @@
   <div class="mapContainer">
     <keep-alive>
       <div id="googlemap">
-        <van-loading class="loading" type="spinner" size="24px">
-          Loading Map
-        </van-loading>
+        <van-loading class="loading" type="spinner" size="24px">Loading Map</van-loading>
       </div>
     </keep-alive>
-    <van-button
-      round
-      class="backButton"
-      icon="arrow-left"
-      type="info"
-      @click="goBack"
-      >Back</van-button
-    >
+    <van-button round class="backButton" icon="arrow-left" type="info" @click="goBack">Back</van-button>
     <div class="luggageContainer">
       <card :name="luggage.name" :id="luggage.ID" :color="luggage.color" />
     </div>
@@ -86,7 +77,7 @@ export default {
     }
   },
   mounted() {
-    this.initGoogleMap();
+    setTimeout(this.initGoogleMap, 2000);
   }
 };
 </script>
